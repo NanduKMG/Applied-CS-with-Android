@@ -19,6 +19,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -73,7 +74,7 @@ public class BlackHoleBoard {
     // board.
     protected int coordsToIndex(int col, int row) {
         int i =col + row * (row + 1) / 2;
-        System.out.println("row:"+row+" col:"+col+" i:"+ i);
+//        System.out.println("row:"+row+" col:"+col+" i:"+ i);
         return i;
     }
 
@@ -87,7 +88,7 @@ public class BlackHoleBoard {
         // The column number is i - (the number of tiles in all the previous rows). -- google
         //column number is i - the xth triangular number, where x is the row of i. -- me
         result.y = i - ((result.x*(result.x+1))/2);
-        System.out.println(i+" row:"+result.x+" col:"+result.y);
+//        System.out.println(i+" row:"+result.x+" col:"+result.y);
         // This is tricky to compute correctly so use the unit test in BlackHoleBoardTest to get it
         // right.
         return result;
@@ -134,7 +135,58 @@ public class BlackHoleBoard {
         // TODO: Implement this method have the computer make a move.
         // At first, we'll just invoke pickRandomMove (above) but later, you'll need to replace
         // it with an algorithm that uses the Monte Carlo method to pick a good move.
-        return pickRandomMove();
+//        return pickRandomMove();
+        ArrayList<Integer> scores = new ArrayList();
+        HashMap<Integer,ArrayList<Integer>> simulations = new HashMap<>();
+        for(int i=0;i<NUM_GAMES_TO_SIMULATE;i++){
+            BlackHoleBoard clone = new BlackHoleBoard();
+            clone.copyBoardState(this);
+            //play till end
+            int firstMove = clone.pickRandomMove();
+            clone.setValue(firstMove);
+
+            while(!clone.gameOver()) {
+                clone.setValue(pickRandomMove());
+                if (clone.gameOver()) {
+                    if(simulations.get(firstMove)==null){
+                        scores = new ArrayList<>();
+                        scores.add(clone.getScore());
+                    }
+                    else{
+                        Log.d("ELse","yes");
+                        scores = simulations.get(firstMove);
+                        scores.add(clone.getScore());
+//                        Log.d("Ith move and scores:"," i: "+i+" first:"+firstMove+" scoresSize:"+scores.size()+" scores:"+scores.toString());
+
+                    }
+                    simulations.put(firstMove,scores);
+                    Log.d("simulated","firstmove"+firstMove+" returns:"+simulations.get(firstMove));
+                }
+            }
+
+
+
+        }
+        int smallestPos = 0;
+        double smallestScore =0.0;
+        int i =0;
+        for (Map.Entry<Integer, ArrayList<Integer>> entry : simulations.entrySet()) {
+            if(i==0){
+                smallestPos = entry.getKey();
+                smallestScore = calculateAverage(simulations.get(entry.getKey()));
+            }
+
+            System.out.println("i= "+i+" Key = " + entry.getKey() +  "avg: "+calculateAverage(simulations.get(entry.getKey())));
+            i++;
+//            System.out.println("Key = " + entry.getKey() + ", Value = " + calculateAverage(simulations.get(entry.getKey())));
+            if(smallestScore>calculateAverage(simulations.get(entry.getKey()))) {
+                smallestPos = Integer.parseInt(entry.getKey().toString());
+                smallestScore = calculateAverage(simulations.get(entry.getKey()));
+            }
+        }
+        Log.d("SIZE:",simulations.entrySet().size()+"");
+        Log.d("smallest :",smallestPos+"");
+        return smallestPos;
     }
 
     // Makes the next move on the board at position i. Automatically updates the current player.
@@ -143,6 +195,17 @@ public class BlackHoleBoard {
         nextMove[currentPlayer]++;
         currentPlayer++;
         currentPlayer %= 2;
+    }
+
+    private double calculateAverage(ArrayList <Integer> scores) {
+        Integer sum = 0;
+        if(!scores.isEmpty()) {
+            for (Integer mark : scores) {
+                sum += mark;
+            }
+            return sum.doubleValue() / scores.size();
+        }
+        return sum;
     }
 
     /* If the game is over, computes the score for the current board by adding up the values of

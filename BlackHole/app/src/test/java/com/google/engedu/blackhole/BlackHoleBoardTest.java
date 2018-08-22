@@ -52,6 +52,7 @@ public class BlackHoleBoardTest {
         // TODO: Implement this test to verify that your getScore method is working.
 //        [1, 2, 3, 4, 1, 4, 5, 6, 2, 7, 8, 9, 6, 10, 5, 10, 7, ?, 8, 3, 9] lose by 12
         BlackHoleBoard board1 = new BlackHoleBoard();
+        //Board configuration taken from https://github.com/ankitkumarojha/ACS-Android/blob/master/Unit-8/BlackHole_starter/app/src/test/java/com/google/engedu/blackhole/BlackHoleBoardTest.java
         board1.tiles= new BlackHoleTile[]{new BlackHoleTile(0, 1),
                 new BlackHoleTile(0, 2), new BlackHoleTile(0, 3),
                 new BlackHoleTile(0, 4), new BlackHoleTile(0, 5), new BlackHoleTile(0, 6),
