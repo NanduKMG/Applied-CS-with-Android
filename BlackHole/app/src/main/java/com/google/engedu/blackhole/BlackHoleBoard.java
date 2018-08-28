@@ -130,13 +130,8 @@ public class BlackHoleBoard {
         return possibleMoves.get(random.nextInt(possibleMoves.size()));
     }
 
-    // Pick a good move for the computer to make. Returns the array index of the position to play.
-    public int pickMove() {
-        // TODO: Implement this method have the computer make a move.
-        // At first, we'll just invoke pickRandomMove (above) but later, you'll need to replace
-        // it with an algorithm that uses the Monte Carlo method to pick a good move.
-//        return pickRandomMove();
-        ArrayList<Integer> scores = new ArrayList();
+    public HashMap<Integer,ArrayList<Integer>> monteCarloSimulations(){
+        ArrayList<Integer> scores ;
         HashMap<Integer,ArrayList<Integer>> simulations = new HashMap<>();
         for(int i=0;i<NUM_GAMES_TO_SIMULATE;i++){
             BlackHoleBoard clone = new BlackHoleBoard();
@@ -144,29 +139,36 @@ public class BlackHoleBoard {
             //play till end
             int firstMove = clone.pickRandomMove();
             clone.setValue(firstMove);
-
             while(!clone.gameOver()) {
                 clone.setValue(pickRandomMove());
-                if (clone.gameOver()) {
-                    if(simulations.get(firstMove)==null){
-                        scores = new ArrayList<>();
-                        scores.add(clone.getScore());
-                    }
-                    else{
-                        Log.d("ELse","yes");
-                        scores = simulations.get(firstMove);
-                        scores.add(clone.getScore());
-//                        Log.d("Ith move and scores:"," i: "+i+" first:"+firstMove+" scoresSize:"+scores.size()+" scores:"+scores.toString());
-
-                    }
-                    simulations.put(firstMove,scores);
-                    Log.d("simulated","firstmove"+firstMove+" returns:"+simulations.get(firstMove));
+            }
+            if (clone.gameOver()) {
+                if(simulations.get(firstMove)==null){
+                    scores = new ArrayList<>();
+                    scores.add(clone.getScore());
                 }
+                else{
+                    scores = simulations.get(firstMove);
+                    scores.add(clone.getScore());
+
+                }
+                simulations.put(firstMove,scores);
+//                Log.d("move:",firstMove+" "+ simulations.get(firstMove).size()+"");
             }
 
-
-
         }
+
+        return simulations;
+    }
+
+
+    // Pick a good move for the computer to make. Returns the array index of the position to play.
+    public int pickMove() {
+        // TODO: Implement this method have the computer make a move.
+        // At first, we'll just invoke pickRandomMove (above) but later, you'll need to replace
+        // it with an algorithm that uses the Monte Carlo method to pick a good move.
+        HashMap<Integer,ArrayList<Integer>> simulations = new HashMap<>();
+        simulations = this.monteCarloSimulations();
         int smallestPos = 0;
         double smallestScore =0.0;
         int i =0;
@@ -176,7 +178,7 @@ public class BlackHoleBoard {
                 smallestScore = calculateAverage(simulations.get(entry.getKey()));
             }
 
-            System.out.println("i= "+i+" Key = " + entry.getKey() +  "avg: "+calculateAverage(simulations.get(entry.getKey())));
+//            System.out.println("i= "+i+" Key = " + entry.getKey() +  "avg: "+calculateAverage(simulations.get(entry.getKey())));
             i++;
 //            System.out.println("Key = " + entry.getKey() + ", Value = " + calculateAverage(simulations.get(entry.getKey())));
             if(smallestScore>calculateAverage(simulations.get(entry.getKey()))) {
@@ -224,18 +226,15 @@ public class BlackHoleBoard {
         }
         // then add/substract the values of all the surrounding tiles depending on who the tile
         // belongs to.
-//        Log.d("ind",i+"");
-//        Log.d("neigh",getNeighbors(indexToCoords(i)).size()+"");
+
         for (BlackHoleTile tile : getNeighbors(indexToCoords(i))) {
 
             if(tile.player==0)
                 score+=tile.value;
             else
                 score-=tile.value;
-//            Log.d("score",score+"");
 
         }
-//        Log.d("score",score+"");
         return score;
     }
 
