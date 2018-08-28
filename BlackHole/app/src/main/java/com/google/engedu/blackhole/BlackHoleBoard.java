@@ -145,11 +145,11 @@ public class BlackHoleBoard {
             if (clone.gameOver()) {
                 if(simulations.get(firstMove)==null){
                     scores = new ArrayList<>();
-                    scores.add(clone.getScore());
+                    scores.add(clone.getScore(clone.getHole()));
                 }
                 else{
                     scores = simulations.get(firstMove);
-                    scores.add(clone.getScore());
+                    scores.add(clone.getScore(clone.getHole()));
 
                 }
                 simulations.put(firstMove,scores);
@@ -214,19 +214,21 @@ public class BlackHoleBoard {
      * all the tiles that surround the empty tile.
      * Otherwise, returns 0.
      */
-    public int getScore() {
-        int score = 0;
-        // TODO: Implement this method to compute the final score for a given board.
-//        ArrayList<BlackHoleTile> neigbours = getNeighbors(coords);
-        // Find the empty tile left on the board
+
+    public int getHole(){
         int i;
         for(i=0;i<BOARD_SIZE;i++){
             if(tiles[i]==null)
                 break;
         }
-        // then add/substract the values of all the surrounding tiles depending on who the tile
-        // belongs to.
-
+        return i;
+    }
+    public int getScore(int hole) {
+        int score = 0;
+        // TODO: Implement this method to compute the final score for a given board.
+//        ArrayList<BlackHoleTile> neigbours = getNeighbors(coords);
+        // Find the empty tile left on the board
+        int i = hole;
         for (BlackHoleTile tile : getNeighbors(indexToCoords(i))) {
 
             if(tile.player==0)

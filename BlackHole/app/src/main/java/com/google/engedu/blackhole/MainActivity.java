@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         clicked.setEnabled(false);
         clicked.setText("" + board.getCurrentPlayerValue());
 
-//        todo rounded edits
+//        done rounded edits
 //        clicked.getBackground().setColorFilter(
 //                COLORS[board.getCurrentPlayer()], PorterDuff.Mode.MULTIPLY);
 
@@ -77,7 +77,10 @@ public class MainActivity extends AppCompatActivity {
     // When the game is over, declare a winner.
     private void handleEndOfGame() {
         disableAllButtons();
-        int score = board.getScore();
+        int hole = board.getHole();
+        int score = board.getScore(hole);
+
+        //get neigbours of hole and blacken them out. using animate.xml
         String message = null;
         if (score > 0) {
             message = "You win by " + score;
