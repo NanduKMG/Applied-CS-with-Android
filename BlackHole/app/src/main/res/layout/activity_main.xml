@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:gravity="center">
 
@@ -34,19 +34,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/roundedbutton"
             android:onClick="onClickHandler"
             android:text="@string/starter_string" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+
         android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
+            android:background="@drawable/roundedbutton"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button1" />
@@ -56,18 +62,26 @@
             style="@android:style/Widget.Material.Light.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:onClick="onClickHandler"
+            android:background="@drawable/roundedbutton"
+
             android:text="@string/starter_string" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+
         android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:layout_height="wrap_content"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
@@ -75,6 +89,9 @@
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:layout_height="wrap_content"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
@@ -83,6 +100,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button5" />
@@ -90,13 +110,17 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+
         android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button6" />
@@ -104,6 +128,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button7" />
@@ -111,6 +138,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button8" />
@@ -118,6 +148,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button9" />
@@ -125,10 +158,14 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+
         android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,6 +176,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button11" />
@@ -146,12 +186,18 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/roundedbutton"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button12" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:layout_height="wrap_content"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
@@ -159,6 +205,9 @@
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:layout_height="wrap_content"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
@@ -167,20 +216,29 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+
         android:layout_centerHorizontal="true"
         android:gravity="center">
+
         <Button
+            android:id="@+id/button15"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/starter_string"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/roundedbutton"
             android:onClick="onClickHandler"
-            android:id="@+id/button15" />
+            android:padding="2dp"
+            android:text="@string/starter_string" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button16" />
@@ -188,6 +246,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button17" />
@@ -195,6 +256,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button18" />
@@ -202,6 +266,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/starter_string"
             android:onClick="onClickHandler"
             android:id="@+id/button19" />
@@ -210,6 +277,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/starter_string"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:onClick="onClickHandler"
             android:id="@+id/button20" />
 

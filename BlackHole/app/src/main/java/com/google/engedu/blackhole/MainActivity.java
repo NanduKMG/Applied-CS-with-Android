@@ -62,9 +62,11 @@ public class MainActivity extends AppCompatActivity {
         clicked.setText("" + board.getCurrentPlayerValue());
 
 //        todo rounded edits
-        clicked.getBackground().setColorFilter(
-                COLORS[board.getCurrentPlayer()], PorterDuff.Mode.MULTIPLY);
+//        clicked.getBackground().setColorFilter(
+//                COLORS[board.getCurrentPlayer()], PorterDuff.Mode.MULTIPLY);
 
+        GradientDrawable drawable = (GradientDrawable) clicked.getBackground();
+        drawable.setColor(COLORS[board.getCurrentPlayer()]);
         String buttonLabel = getResources().getResourceEntryName(clicked.getId());
         board.setValue(Integer.parseInt(buttonLabel.substring(6)));
         if (board.gameOver()) {
@@ -124,7 +126,9 @@ public class MainActivity extends AppCompatActivity {
             Button b = (Button) findViewById(id);
             b.setEnabled(true);
             b.setText("?");
-            b.getBackground().setColorFilter(null);
+//            b.getBackground().setColorFilter(null);
+            GradientDrawable drawable = (GradientDrawable) b.getBackground();
+            drawable.setColor(0xffffffff);//white
         }
     }
 }
