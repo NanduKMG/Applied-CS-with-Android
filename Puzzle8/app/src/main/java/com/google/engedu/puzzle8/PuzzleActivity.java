@@ -25,6 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 
 public class PuzzleActivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class PuzzleActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap imageBitmap = null;
     private PuzzleBoardView boardView;
+    private int seek=3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,34 @@ public class PuzzleActivity extends AppCompatActivity {
         // Some setup of the view.
         boardView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         container.addView(boardView);
+        SeekBar simpleSeekBar=(SeekBar)findViewById(R.id.seekBar);
+        simpleSeekBar.setVisibility(View.INVISIBLE);
+        // perform seek bar change listener event used for getting the progress value
+        simpleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(PuzzleActivity.this, "Seek bar progress is :" + progressChangedValue,
+                        Toast.LENGTH_SHORT).show();
+//                boardView.setNumTiles(progressChangedValue);
+                if(progressChangedValue<2){
+                    progressChangedValue=2;
+                }
+                seek  = progressChangedValue;
+                boardView.initialize(imageBitmap,seek);
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setVisibility(View.INVISIBLE);
+
+            }
+        });
     }
 
     @Override
@@ -79,9 +111,11 @@ public class PuzzleActivity extends AppCompatActivity {
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
-            boardView.initialize(imageBitmap);
+            boardView.initialize(imageBitmap,seek);
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
             imageView.setVisibility(View.INVISIBLE);
+            SeekBar simpleSeekBar=(SeekBar)findViewById(R.id.seekBar);
+            simpleSeekBar.setVisibility(View.VISIBLE);
 //            imageView.setImageBitmap(imageBitmap);
         }
     }

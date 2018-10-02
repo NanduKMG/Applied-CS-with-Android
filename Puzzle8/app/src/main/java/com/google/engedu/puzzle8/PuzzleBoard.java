@@ -25,7 +25,7 @@ import java.util.Arrays;
 
 public class PuzzleBoard {
 
-    private static final int NUM_TILES = 3;
+    private  int NUM_TILES = 3;
     private static final int[][] NEIGHBOUR_COORDS = {
             { -1, 0 },
             { 1, 0 },
@@ -34,8 +34,11 @@ public class PuzzleBoard {
     };
     private ArrayList<PuzzleTile> tiles = new ArrayList<>();
     private int tileLen;
+    public int steps=0;
+    public PuzzleBoard previousBoard = null;
 
-    PuzzleBoard(Bitmap bitmap, int parentWidth) {
+    PuzzleBoard(Bitmap bitmap, int parentWidth,int num) {
+        NUM_TILES = num;
         bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getWidth());
         bitmap = Bitmap.createScaledBitmap(bitmap,parentWidth,parentWidth,false);
         tileLen = parentWidth/NUM_TILES;
@@ -52,8 +55,13 @@ public class PuzzleBoard {
         tiles.add(null);
     }
 
-    PuzzleBoard(PuzzleBoard otherBoard) {
+    public void setNumTiles(int v){
+        NUM_TILES=v;
+    }
+    PuzzleBoard(PuzzleBoard otherBoard,int v) {
         tiles = (ArrayList<PuzzleTile>) otherBoard.tiles.clone();
+        NUM_TILES = v;
+        previousBoard = otherBoard;
     }
 
     public void reset() {
@@ -111,6 +119,7 @@ public class PuzzleBoard {
             if (tile == null || tile.getNumber() != i)
                 return false;
         }
+        Log.d("resolved","True");
         return true;
     }
 
@@ -135,7 +144,7 @@ public class PuzzleBoard {
             if(tiles.get(i)==null)
                 break;
         }
-        Log.d("tileShuffle",i+"");
+        Log.d("tile empty",i+"");
 
         //consider all neighb tiles
         int[][] neighs = NEIGHBOUR_COORDS.clone();
@@ -144,20 +153,39 @@ public class PuzzleBoard {
 //          Log.d("arr", Arrays.toString(ar));
             if((x+ar[0]<NUM_TILES)&&(y+ar[1]<NUM_TILES)&&(x+ar[0]>-1)&&(y+ar[1]>-1)){
                 Log.d("arr", Arrays.toString(ar));
-                temp = new PuzzleBoard(this);
+                temp = new PuzzleBoard(this,NUM_TILES);
+                temp.steps = steps+1;
                 temp.swapTiles(XYtoIndex(x,y),XYtoIndex(x+ar[0],y+ar[1]));
                 neigbours.add(temp);
             }
         }
 
-
-
-
         return neigbours;
     }
 
+    public void printBoard(){
+        for(PuzzleTile tile:tiles){
+            if(tile==null){
+                Log.d("tiles","x");
+
+                continue;
+            }
+            Log.d("tiles",tile.getNumber()+"");
+        }
+    }
+
     public int priority() {
-        return 0;
+        int x,y,p=steps;
+        PuzzleTile temp;
+        for(int i=0;i<NUM_TILES*NUM_TILES;i++){
+            temp = tiles.get(i);
+            if(temp==null)
+                continue;
+            //Manhattan distance: 10*( (X_perfect - X_present)+(Y_perfect - Y_present))
+            p += 10*( Math.abs((temp.getNumber()%NUM_TILES) - (i%NUM_TILES)) + Math.abs((temp.getNumber()/NUM_TILES) - (i/NUM_TILES)) );
+        }
+        Log.d("priority",p+"");
+        return p;
     }
 
 }

@@ -19,11 +19,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class PuzzleBoardView extends View {
@@ -39,9 +44,11 @@ public class PuzzleBoardView extends View {
         animation = null;
     }
 
-    public void initialize(Bitmap imageBitmap) {
+    public void initialize(Bitmap imageBitmap,int v) {
         int width = getWidth();
-        puzzleBoard = new PuzzleBoard(imageBitmap, width);
+        int numTiles= v;
+        puzzleBoard = new PuzzleBoard(imageBitmap, width,numTiles);
+        invalidate();
     }
 
     @Override
@@ -99,7 +106,53 @@ public class PuzzleBoardView extends View {
         }
         return super.onTouchEvent(event);
     }
+    public  static Comparator<PuzzleBoard> puzzleBoardComparator = new Comparator<PuzzleBoard>() {
+
+        @Override
+        public int compare(PuzzleBoard a, PuzzleBoard b) {
+            return a.priority() - b.priority();
+        }
+    };
 
     public void solve() {
+        PuzzleBoard temp;
+        animation = new ArrayList<>();
+        PriorityQueue<PuzzleBoard> pq = new PriorityQueue<PuzzleBoard>(1,puzzleBoardComparator);
+        pq.add(puzzleBoard);
+        puzzleBoard.printBoard();
+        while(!pq.isEmpty()){
+            Log.d("Pq size","before "+pq.size()+"");
+
+            temp = pq.poll();
+//            temp.printBoard();
+            Log.d("Pq size","after :" +pq.size()+"");
+
+            if(!temp.resolved()){
+                for(PuzzleBoard pb:temp.neighbours()){
+                  if(!pq.contains(pb)){
+                      pq.add(pb);
+//                      pq.add(temp);
+//                      Log.d("Quesize",pq.size()+"yeaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//                      temp.previousBoard.printBoard();
+//                      pb.printBoard();
+                  }
+                }
+//                pq.addAll(temp.neighbours());
+            }
+            else{
+                animation.add(temp);
+                temp = temp.previousBoard;
+                while(temp!=puzzleBoard) {
+                    animation.add(temp);
+                    Log.d("Solutions","below");
+                    temp.printBoard();
+                    temp = temp.previousBoard;
+                }
+                animation.add(temp);
+                Collections.reverse(animation);
+                break;
+            }
+        }
+        invalidate();
     }
 }
